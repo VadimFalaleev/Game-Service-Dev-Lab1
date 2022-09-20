@@ -2,24 +2,25 @@ using UnityEngine;
 
 public class PlaneScript : MonoBehaviour
 {
-    [SerializeField] public float radius = 5.0f;
-    [SerializeField] public float force = 10f;
+    [SerializeField] public float radius = 5.0f; // Радиус взрыва
+    [SerializeField] public float force = 10f; // Сила взрыва
 
-    [SerializeField] public GameObject prefabBoomPoint;
-    [SerializeField] public GameObject prefabBoomSphere;
+    [SerializeField] public GameObject prefabPoint; // Используем префаб Point
+    [SerializeField] public GameObject prefabSpawnSphere; // Используем префаб SpawnSphere
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision) // Активируется, если один коллайдер касается другого
     {
-        if (collision.gameObject.name == "Sphere") 
+        if (collision.gameObject.name == "Sphere") // Если объект с именем Sphere...
         {
-            Destroy(collision.gameObject);
-            Vector3 boomPosition = collision.gameObject.transform.position;
-            Quaternion boomRotation = collision.gameObject.transform.rotation;
-            Instantiate(prefabBoomPoint, boomPosition, boomRotation);
-            Instantiate(prefabBoomSphere, boomPosition, boomRotation);
+            Destroy(collision.gameObject); // ... то он уничтожается
+            Vector3 boomPosition = collision.gameObject.transform.position; // Координаты центра объекта
+            Quaternion boomRotation = collision.gameObject.transform.rotation; // Угол поворота объекта
+            Instantiate(prefabPoint, boomPosition, boomRotation);
+            Instantiate(prefabSpawnSphere, boomPosition, boomRotation); // Создаются префабы на месте и под тем углом, где уничтожился объект Sphere
 
-            Collider[] colliders = Physics.OverlapSphere(boomPosition, radius);
-            foreach (Collider c in colliders)
+            Collider[] colliders = Physics.OverlapSphere(boomPosition, radius); // Создаем массив коллайдеров и записываем в него те, которые находятся
+                                                                                // в радиусе места, где уничтожился объект Sphere
+            foreach (Collider c in colliders) // Пробегаемся по каждому элементу массива и заставляем их лететь в сторону, обратную точки взрыва(от центра)
             {
                 Rigidbody rb = GetComponent<Rigidbody>();
                 if (rb != null)
