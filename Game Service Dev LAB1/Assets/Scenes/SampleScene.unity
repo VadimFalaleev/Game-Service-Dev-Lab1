@@ -445,8 +445,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 5
   force: 10
-  prefabBoomPoint: {fileID: 1138101326310623847, guid: 4015d19891441f444afaeea83612b207, type: 3}
-  prefabBoomSphere: {fileID: 7087554802586507089, guid: 94e9fcc33b7c41d41be4c6217b22a15a, type: 3}
+  prefabPoint: {fileID: 1138101326310623847, guid: 4015d19891441f444afaeea83612b207, type: 3}
+  prefabSpawnSphere: {fileID: 7087554802586507089, guid: 94e9fcc33b7c41d41be4c6217b22a15a, type: 3}
 --- !u!54 &893077107
 Rigidbody:
   m_ObjectHideFlags: 0
