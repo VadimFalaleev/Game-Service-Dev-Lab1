@@ -10,20 +10,21 @@ public class PlaneScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Sphere")
-            Destroy(collision.gameObject);
-
-        Vector3 boomPosition = collision.gameObject.transform.position;
-        Quaternion boomRotation = collision.gameObject.transform.rotation;
-        Instantiate(prefabBoomPoint, boomPosition, boomRotation);
-        Instantiate(prefabBoomSphere, boomPosition, boomRotation);
-
-        Collider[] colliders = Physics.OverlapSphere(boomPosition, radius);
-        foreach (Collider c in colliders)
+        if (collision.gameObject.name == "Sphere") 
         {
-            Rigidbody rb = GetComponent<Rigidbody>();
-            if (rb != null)
-                rb.AddExplosionForce(force, boomPosition, radius, 3.0f);
+            Destroy(collision.gameObject);
+            Vector3 boomPosition = collision.gameObject.transform.position;
+            Quaternion boomRotation = collision.gameObject.transform.rotation;
+            Instantiate(prefabBoomPoint, boomPosition, boomRotation);
+            Instantiate(prefabBoomSphere, boomPosition, boomRotation);
+
+            Collider[] colliders = Physics.OverlapSphere(boomPosition, radius);
+            foreach (Collider c in colliders)
+            {
+                Rigidbody rb = GetComponent<Rigidbody>();
+                if (rb != null)
+                    rb.AddExplosionForce(force, boomPosition, radius, 3.0f);
+            }
         }
     }
 }

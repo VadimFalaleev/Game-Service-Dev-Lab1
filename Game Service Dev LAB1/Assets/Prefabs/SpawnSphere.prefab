@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 7087554802466376667}
   - component: {fileID: 7087554802466376660}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Sphere (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -370,7 +370,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7087554802466376661}
   - {fileID: 7087554803548692016}
   - {fileID: 7087554803361075556}
   - {fileID: 7087554802522978711}
@@ -384,8 +383,9 @@ Transform:
   - {fileID: 7087554802375666592}
   - {fileID: 7087554804156997673}
   - {fileID: 7087554802696375457}
+  - {fileID: 7087554802466376661}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7087554802696375458
 GameObject:
