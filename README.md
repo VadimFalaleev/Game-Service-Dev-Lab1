@@ -56,7 +56,7 @@
 
 - Я создал 3D проект в Unity версии 2022.1.0f1(Я уже работал с Unity, поэтому давно установил его и настроил интеграцию с Visual Studio).
 
-- На сцену проекта добавил 3 объекта: Cube, Sphere и Plane и добавил объекту Cube материал "ForCube" красного цвета.
+- На сцену проекта добавил 3 объекта: Cube, Sphere и Plane и добавил объекту Cube материал ForCube красного цвета.
 
 ![image](https://user-images.githubusercontent.com/54228342/191225646-a308aa11-9da0-4343-a3ab-4428178c7b89.png)
 
@@ -114,6 +114,25 @@ private void OnCollisionEnter(Collision collision)
 ![image](https://user-images.githubusercontent.com/54228342/191241750-851e7a47-2fe6-4502-9bc1-28b251816595.png)
 
 ![image](https://user-images.githubusercontent.com/54228342/191241779-e2245e12-1420-4518-9d0e-2b443e06bb6e.png)
+
+- Создадим для объекта Plane компонент Rigidbody и поставим галочку напротив Is Kinematic, чтобы объект не падал. Для этого же объекта создадим скрипт Plane Script, который будет уничтожать объект Sphere, если он касается объекта Plane.
+
+![image](https://user-images.githubusercontent.com/54228342/191245544-ab5d2866-6abe-4a9d-9c3e-f705f8500743.png)
+
+```c#
+
+using UnityEngine;
+
+public class PlaneScript : MonoBehaviour
+{
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Sphere")
+            Destroy(collision.gameObject);
+    }
+}
+
+```
 
 ## Задание 2
 ### Продемонстрируйте на сцене в Unity следующее:
