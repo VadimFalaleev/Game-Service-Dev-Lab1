@@ -89,7 +89,28 @@ public class SphereScript : MonoBehaviour
 
 ```
 
-- 
+![image](https://user-images.githubusercontent.com/54228342/191238638-b3bce739-01b2-480a-99bc-80fc7e6991ef.png)
+
+- Немного измменил скрипт: теперь при столкновении объекта Sphere с объектом Cube последний будет менять цвет на зеленый, а при завершении столкновения на красный. Чтобы скрипт работал, добавляю объекту Sphere компонент Rigidbody и ставлю галочку напротив Use Gravity, а в компоненте Sphere Collider убираю галочку напротив Is Trigger.
+
+```c#
+
+private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Cube")
+            collision.gameObject.GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.name == "Cube")
+            collision.gameObject.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+    }
+
+```
+
+![image](https://user-images.githubusercontent.com/54228342/191239954-1c5c8e94-bca8-4389-9de3-5115ffb9fdd4.png)
+
 
 ## Задание 2
 ### Должна ли величина loss стремиться к нулю при изменении исходных данных? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ.
