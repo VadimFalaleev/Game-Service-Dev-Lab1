@@ -134,6 +134,54 @@ public class PlaneScript : MonoBehaviour
 
 ```
 
+- Далее добавим для объекта Sphere эффект взрыва после уничтожения. Для этого создадим пустой объект Point и добавим ему компоненты Rigidbody без галочек и Sphere Collider, в котором установим радиус, равный радиусу объекта Sphere. Создадим так же пустой объект SpawnSphere, в который добавим несколько объектов Sphere, но уже меньшего размера и распределим их случайно в небольшом расстоянии друг от друга. После всего создадим префабы двух этих объектов и удалим объекты со сцены.
+
+![image](https://user-images.githubusercontent.com/54228342/191322310-844f8125-2ac9-4c81-804c-5acfc74785c0.png)
+
+![image](https://user-images.githubusercontent.com/54228342/191322336-11660053-9519-4c4f-be94-e88a5d96c60e.png)
+
+- Теперь вернемся к скрипту Plane Script, и добавим там несколько строчек.
+
+```c#
+
+using UnityEngine;
+
+public class PlaneScript : MonoBehaviour
+{
+    [SerializeField] public float radius = 5.0f; // Радиус взрыва
+    [SerializeField] public float force = 10f; // Сила взрыва
+
+    [SerializeField] public GameObject prefabPoint; // Используем префаб Point
+    [SerializeField] public GameObject prefabSpawnSphere; // Используем префаб SpawnSphere
+
+    private void OnCollisionEnter(Collision collision) // Активируется, если один коллайдер касается другого
+    {
+        if (collision.gameObject.name == "Sphere") // Если объект с именем Sphere...
+        {
+            Destroy(collision.gameObject); // ... то он уничтожается
+            Vector3 boomPosition = collision.gameObject.transform.position; // Координаты центра объекта
+            Quaternion boomRotation = collision.gameObject.transform.rotation; // Угол поворота объекта
+            Instantiate(prefabPoint, boomPosition, boomRotation);
+            Instantiate(prefabSpawnSphere, boomPosition, boomRotation); // Создаются префабы на месте и под тем углом, где уничтожился объект Sphere
+
+            Collider[] colliders = Physics.OverlapSphere(boomPosition, radius); // Создаем массив коллайдеров и записываем в него те, которые находятся
+                                                                                // в радиусе места, где уничтожился объект Sphere
+            foreach (Collider c in colliders) // Пробегаемся по каждому элементу массива и заставляем их лететь в сторону, обратную точки взрыва(от центра)
+            {
+                Rigidbody rb = GetComponent<Rigidbody>();
+                if (rb != null)
+                    rb.AddExplosionForce(force, boomPosition, radius, 3.0f);
+            }
+        }
+    }
+}
+
+```
+
+- Остается последний шаг. В инспекторе в скрипт Plane Script вставляем префабы в нужные ячейки. После этого все будет работать, как и планировалось!
+
+![image](https://user-images.githubusercontent.com/54228342/191327514-c142ad0f-a384-485d-b4f5-b73e5a667909.png)
+
 ## Задание 2
 ### Продемонстрируйте на сцене в Unity следующее:
 - Что произойдёт с координатами объекта, если он перестанет быть
