@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class PlaneScript : MonoBehaviour
 {
-    [SerializeField] public float radius = 5.0f; // Радиус взрыва
-    [SerializeField] public float force = 10f; // Сила взрыва
+    [SerializeField] float radius = 5.0f; // Радиус взрыва
+    [SerializeField] float force = 10f; // Сила взрыва
 
-    [SerializeField] public GameObject prefabPoint; // Используем префаб Point
-    [SerializeField] public GameObject prefabSpawnSphere; // Используем префаб SpawnSphere
+    [SerializeField] GameObject prefabPoint; // Используем префаб Point
+    [SerializeField] GameObject prefabSpawnSphere; // Используем префаб SpawnSphere
 
     private void OnCollisionEnter(Collision collision) // Активируется, если один коллайдер касается другого
     {
@@ -20,7 +20,7 @@ public class PlaneScript : MonoBehaviour
 
             Collider[] colliders = Physics.OverlapSphere(boomPosition, radius); // Создаем массив коллайдеров и записываем в него те, которые находятся
                                                                                 // в радиусе места, где уничтожился объект Sphere
-            foreach (Collider c in colliders) // Пробегаемся по каждому элементу массива и заставляем их лететь в сторону, обратную точки взрыва(от центра)
+            foreach (Collider с in colliders) // Пробегаемся по каждому элементу массива и заставляем их лететь в сторону, обратную точки взрыва(от центра)
             {
                 Rigidbody rb = GetComponent<Rigidbody>();
                 if (rb != null)
