@@ -7,9 +7,9 @@
 
 | Задание | Выполнение | Баллы |
 | ------ | ------ | ------ |
-| Задание 1 | * | 60 |
-| Задание 2 | * | 20 |
-| Задание 3 | * | 20 |
+| Задание 1 | * | 100 |
+| Задание 2 | * | 100 |
+| Задание 3 | * | 100 |
 
 знак "*" - задание выполнено; знак "#" - задание не выполнено;
 
@@ -91,7 +91,7 @@ public class SphereScript : MonoBehaviour
 
 ![image](https://user-images.githubusercontent.com/54228342/191238638-b3bce739-01b2-480a-99bc-80fc7e6991ef.png)
 
-- Немного измменил скрипт: теперь при столкновении объекта Sphere с объектом Cube последний будет менять цвет на зеленый, а при завершении столкновения на красный. Чтобы скрипт работал, добавляю объекту Sphere компонент Rigidbody и ставлю галочку напротив Use Gravity, а в компоненте Sphere Collider убираю галочку напротив Is Trigger.
+- Немного изменил скрипт: теперь при столкновении объекта Sphere с объектом Cube последний будет менять цвет на зеленый, а при завершении столкновения на красный. Чтобы скрипт работал, добавляю объекту Sphere компонент Rigidbody и ставлю галочку напротив Use Gravity, а в компоненте Sphere Collider убираю галочку напротив Is Trigger.
 
 ```c#
 
@@ -145,11 +145,11 @@ using UnityEngine;
 
 public class PlaneScript : MonoBehaviour
 {
-    [SerializeField] public float radius = 5.0f; // Радиус взрыва
-    [SerializeField] public float force = 10f; // Сила взрыва
+    [SerializeField] float radius = 5.0f; // Радиус взрыва
+    [SerializeField] float force = 10f; // Сила взрыва
 
-    [SerializeField] public GameObject prefabPoint; // Используем префаб Point
-    [SerializeField] public GameObject prefabSpawnSphere; // Используем префаб SpawnSphere
+    [SerializeField] GameObject prefabPoint; // Используем префаб Point
+    [SerializeField] GameObject prefabSpawnSphere; // Используем префаб SpawnSphere
 
     private void OnCollisionEnter(Collision collision) // Активируется, если один коллайдер касается другого
     {
@@ -175,7 +175,7 @@ public class PlaneScript : MonoBehaviour
 
 ```
 
-- Остается последний шаг. В инспекторе в скрипт Plane Script вставляем префабы в нужные ячейки. После этого все будет работать, как и планировалось!
+- Остается последний шаг. В инспекторе в скрипт Plane Script вставляем префабы в нужные ячейки.
 
 ![image](https://user-images.githubusercontent.com/54228342/191327514-c142ad0f-a384-485d-b4f5-b73e5a667909.png)
 
@@ -217,7 +217,7 @@ public class PlaneScript : MonoBehaviour
 
 ![image](https://user-images.githubusercontent.com/54228342/191908791-2c077dd0-4993-49d7-b0b2-ff09483c63c7.png)
 
-- Далее сделаем объект Cube префабом и создадим 2 пустых объекта CubePointMax и CubePointMin и дадим им компонент Box Collider для удобства. Они будут определять границы той территории, где смогут генерироваться новые объекты. Расставим эти объекты по краям объекта Plane следующим образом:
+- Далее сделаем объект Cube префабом и создадим 2 пустых объекта CubePointMax и CubePointMin и дадим им компонент Box Collider. Они будут определять границы той территории, где смогут генерироваться новые объекты. Расставим эти объекты по краям объекта Plane следующим образом:
 
 ![image](https://user-images.githubusercontent.com/54228342/191909497-1312f237-4af7-4aec-8187-2ecf12197fd2.png)
 
@@ -281,6 +281,11 @@ public class SpawnCubesScript : MonoBehaviour
 ![image](https://user-images.githubusercontent.com/54228342/191919643-92d4bd8d-8e9a-4451-a52a-5cc60d09bc59.png)
 ![image](https://user-images.githubusercontent.com/54228342/191919750-1587a6a1-3f07-4a8a-9c67-305f5acbcc48.png)
 
+- Теперь запускаем проект, появляется окно ввода. Введем количество кубиков, например, 9. Нажимаем на кнопку и смотрим на результат(кубиков будет 10, потому что один стоял изначально из прошлого задания).
 
+![image](https://user-images.githubusercontent.com/54228342/191934190-09968ac9-6ec9-4974-87c9-a412b5811cf2.png)
+![image](https://user-images.githubusercontent.com/54228342/191934203-dd165106-f210-4b70-a027-248085beedb4.png)
 
 ## Выводы
+По итогу выполнения первой лабораторной работы я ознакомился с основными функциями Unity и взаимодействием с объектами внутри редактора. Были выполнены все 3 задания. Работал с объекатми, их взаимодействиями и компонентами, материалом, интерфейсом, скриптами. Подробнее изучил компонент Rigidbody, рассмотрев 3 примера работы с ним. Изучал поведение координат у дочерних и простых объектов. Создал генерацию объектов на сцене.
+Кроме Unity, работал с GitHub. Создал репозиторий, настроил файлы Readme и gitignore. Настроил интеграцию GitHub и проекта в Unity. 
