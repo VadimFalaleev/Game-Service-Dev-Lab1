@@ -110,9 +110,7 @@ private void OnCollisionEnter(Collision collision)
 ```
 
 ![image](https://user-images.githubusercontent.com/54228342/191239954-1c5c8e94-bca8-4389-9de3-5115ffb9fdd4.png)
-
 ![image](https://user-images.githubusercontent.com/54228342/191241750-851e7a47-2fe6-4502-9bc1-28b251816595.png)
-
 ![image](https://user-images.githubusercontent.com/54228342/191241779-e2245e12-1420-4518-9d0e-2b443e06bb6e.png)
 
 - Создадим для объекта Plane компонент Rigidbody и поставим галочку напротив Is Kinematic, чтобы объект не падал. Для этого же объекта создадим скрипт Plane Script, который будет уничтожать объект Sphere, если он касается объекта Plane.
@@ -137,7 +135,6 @@ public class PlaneScript : MonoBehaviour
 - Далее добавим для объекта Sphere эффект взрыва после уничтожения. Для этого создадим пустой объект Point и добавим ему компоненты Rigidbody без галочек и Sphere Collider, в котором установим радиус, равный радиусу объекта Sphere. Создадим так же пустой объект SpawnSphere, в который добавим несколько объектов Sphere, но уже меньшего размера и распределим их случайно в небольшом расстоянии друг от друга. После всего создадим префабы двух этих объектов и удалим объекты со сцены.
 
 ![image](https://user-images.githubusercontent.com/54228342/191322310-844f8125-2ac9-4c81-804c-5acfc74785c0.png)
-
 ![image](https://user-images.githubusercontent.com/54228342/191322336-11660053-9519-4c4f-be94-e88a5d96c60e.png)
 
 - Теперь вернемся к скрипту Plane Script, и добавим там несколько строчек.
@@ -201,7 +198,6 @@ public class PlaneScript : MonoBehaviour
 - Это связано с тем, что у дочерних объектов начало координат находится в точке, где расположен объект-родитель. Убедимся в этом. Сделаем наш объект снова дочерним, поставим ему координаты (0, 0, 0), после чего достанем его из объекта SpawnSphere и сравним его координаты с координатами SpawnSphere.
 
 ![image](https://user-images.githubusercontent.com/54228342/191472506-fda69d79-8763-4926-8f48-876182a002ba.png)
-
 ![image](https://user-images.githubusercontent.com/54228342/191472547-f803d058-24ac-41d2-86d4-28fc4bb419a8.png)
 
 - Координаты оказались одинаковыми. Теперь поставим для объекта Sphere(14) координаты (0, 0, 0).
@@ -214,6 +210,76 @@ public class PlaneScript : MonoBehaviour
 
 ## Задание 3
 ### Реализуйте на сцене генерацию n кубиков. Число n вводится пользователем после старта сцены.
+
+Ход работы:
+
+- Для начала создадим панель, на которой будет кнопка и строка ввода.
+
+![image](https://user-images.githubusercontent.com/54228342/191908791-2c077dd0-4993-49d7-b0b2-ff09483c63c7.png)
+
+- Далее сделаем объект Cube префабом и создадим 2 пустых объекта CubePointMax и CubePointMin и дадим им компонент Box Collider для удобства. Они будут определять границы той территории, где смогут генерироваться новые объекты. Расставим эти объекты по краям объекта Plane следующим образом:
+
+![image](https://user-images.githubusercontent.com/54228342/191909497-1312f237-4af7-4aec-8187-2ecf12197fd2.png)
+
+- Следующим шагом нужно создать скрипт SpawnCubesScript, который генерирует количество объектов Cube, равное числу, написанному в строке ввода, в заданной области после нажатия кнопки. Сам скрипт прикрепляем к объекту Canvas.
+
+```c#
+
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SpawnCubesScript : MonoBehaviour
+{
+    [SerializeField] GameObject panel; // Определяем объект Panel на сцене.
+    [SerializeField] InputField Field; // Определяем строку ввода на сцене.
+    [SerializeField] GameObject cube; // Определяем объект, который будем генерировать.
+    [SerializeField] GameObject cubePointMin; 
+    [SerializeField] GameObject cubePointMax; // Определяем объекты, служащие границей для генерации объектов.
+    [SerializeField] List<Vector3> spawnPoints = new(); // Определяем список, где будут хранится координаты, куда могут генерироваться объекты.
+
+    public void Awake()
+    {
+        Time.timeScale = 0; // При запуске проект будет на паузе.
+    }
+
+    public void GenerateButton() // Этот метод бдует работать после нажатия кнопки.
+    {
+        GetPosition();
+
+        panel.SetActive(false); // Закрываем панель.
+        Time.timeScale = 1; // Убираем проект с паузы.
+
+        for (int i = 0; i < int.Parse(Field.text); i++)
+            Instantiate(cube, spawnPoints[i], cube.transform.rotation); // Генерируем нужно количество объектов.
+    }
+
+    private void GetPosition()
+    {
+        float cubePointMinX = cubePointMin.transform.position.x;
+        float cubePointMinZ = cubePointMin.transform.position.z;
+        float cubePointMaxX = cubePointMax.transform.position.x;
+        float cubePointMaxZ = cubePointMax.transform.position.z; // Записываем координаты Х и Z границ для удобства.
+
+        for (int i = 0; i < int.Parse(Field.text); i++)
+        {
+            Vector3 newPoint = new(
+                Random.Range(cubePointMinX, cubePointMaxX),
+                cubePointMax.transform.position.y,
+                Random.Range(cubePointMinZ, cubePointMaxZ)); // Определяем точку, куда будем генерировать объект.
+
+            if (!spawnPoints.Contains(newPoint))
+                spawnPoints.Add(newPoint);  // Добавляем точку в список, если такой еще нет.
+        }
+    }
+}
+
+```
+
+- Последние действия: в инспекторе добавляем все объекты в последний скрипт. После этого соединяем кнопку с методом GenerateButton().
+
+![image](https://user-images.githubusercontent.com/54228342/191919643-92d4bd8d-8e9a-4451-a52a-5cc60d09bc59.png)
+![image](https://user-images.githubusercontent.com/54228342/191919750-1587a6a1-3f07-4a8a-9c67-305f5acbcc48.png)
 
 
 
